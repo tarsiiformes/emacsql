@@ -169,7 +169,7 @@ MESSAGE should not have a newline on the end."
   "Compile s-expression SQL for CONNECTION into a string."
   (let* ((mask (when connection (emacsql-types connection)))
          (emacsql-type-map (or mask emacsql-type-map)))
-    (concat (apply #'emacsql-format (emacsql-prepare sql) args) ";")))
+    (apply #'emacsql-format (emacsql-prepare sql) args)))
 
 (cl-defmethod emacsql ((connection emacsql-connection) sql &rest args)
   "Send SQL s-expression to CONNECTION and return the results."

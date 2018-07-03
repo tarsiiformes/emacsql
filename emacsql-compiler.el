@@ -516,7 +516,10 @@ Only use within `emacsql-with-params'!"
 (defun emacsql-format (expansion &rest args)
   "Fill in the variables EXPANSION with ARGS."
   (cl-destructuring-bind (format . vars) expansion
-    (apply #'format format
+    (apply #'format
+           (if (string-suffix-p format ";")
+               string
+             (concat string ";"))
            (cl-loop for (i . kind) in vars collect
                     (let ((thing (nth i args)))
                       (cl-case kind

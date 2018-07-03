@@ -72,10 +72,14 @@
     (sqlite3-finalize stmt)
     (nreverse ret)))
 
-(cl-defmethod emacsql-compile ((connection emacsql-sqlite3-connection) sql &rest args)
-  (let ((emacsql-type-map (or (and connection (emacsql-types connection))
-                              emacsql-type-map)))
-    (emacsql-format-partial (emacsql-prepare sql) args)))
+;; Use this instead if we decide to turn `emacsql-compile'
+;; into a generic function instead of `emacsql-format'.
+;; (cl-defmethod emacsql-compile ((connection emacsql-sqlite3-connection) sql &rest args)
+;;   (let ((emacsql-type-map (or (and connection (emacsql-types connection))
+;;                               emacsql-type-map)))
+;;     (emacsql-format-partial (emacsql-prepare sql) args)))
+;;
+;; (defun emacsql-format-partial (expansion args)
 
 (defun emacsql-format-partial (expansion args)
   (cl-destructuring-bind (format . vars) expansion
